@@ -110,7 +110,7 @@ Create a "Cron" object from cron syntax
 
 ### `dump`
 
-Takes a valid Twig variable and dumps it out into the [Grav debugger panel](../../advanced/debugging).  The debugger must be **enabled** to see the values in the messages tab.
+Takes a valid Twig variable and dumps it out into the [Grav debugger panel](../../../advanced/debugging).  The debugger must be **enabled** to see the values in the messages tab.
 
 `dump(page.header)`
 
@@ -165,6 +165,19 @@ Gets the type of a variable:
 Takes a Github Gist ID and creates appropriate Gist embed code
 
 `gist('bc448ff158df4bc56217')` <i class="fa fa-long-arrow-right"></i> **{{ gist('bc448ff158df4bc56217')|e }}**
+
+### `header_var`
+
+Helper function. Returns `page.header.<variable>`.
+
+Given frontmatter of
+```
+---
+title: Home
+---
+```
+
+`header_var('title')` <i class="fa fa-long-arrow-right"></i> **Home**
 
 [version=16,17]
 ### `http_response_code`
@@ -258,6 +271,15 @@ Prints a variable in a readable format
 Will generate a random string of the required number of characters.  Particularly useful in creating a unique id or key.
 
 `random_string(10)` <i class="fa fa-long-arrow-right"></i> **{{ random_string(10) }}**
+
+### `unique_id`
+
+Generates a random string with configurable length, prefix and suffix. Unlike the built-in PHP `uniqid()` function and the `random_string` utils, this string will be generated truly unique and non-conflicting.
+
+
+`unique_id(9)` <i class="fa fa-long-arrow-right"></i> **{{ unique_id(9) }}**
+`unique_id(11, { prefix: 'user_' })` <i class="fa fa-long-arrow-right"></i> **unique_id(11, { prefix: 'user_' }) }}**
+`unique_id(13, { suffix: '.json' })` <i class="fa fa-long-arrow-right"></i> **unique_id(13, { suffix: '.json' }) }}**
 
 ### `range`
 
@@ -424,7 +446,10 @@ The `vardump()` function outputs the current variable to the screen (rather than
 {% set my_array = {foo: 'bar', baz: 'qux'} %}
 
 [prism classes="language-twig"]
-{{ vardump(my_array) }}
+[
+  "foo" => "bar"
+  "baz" => "qux"
+]
 [/prism]
 
 [version=16,17]

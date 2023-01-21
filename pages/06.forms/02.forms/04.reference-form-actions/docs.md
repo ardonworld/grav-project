@@ -67,13 +67,16 @@ In this case, we get the field "hiddenfield" from the form, and use it for the l
 
 ### Message
 
-Sets a message to be shown in the next page. Works if you set a `display` action too, which redirects the user to another page. Note, you can use Twig in the message if you like.
+Sets a message to be shown upon form submission. 
 
 [prism classes="language-yaml line-numbers"]
 process:
     - message: Thank you for your feedback!
-    - display: thankyou
 [/prism]
+
+By default, the message will be rendered at the beginning of the `form` element. 
+
+However, you can optionally modify the presentation either through `display` or through `redirect`.
 
 #### Validation Message
 
@@ -92,16 +95,16 @@ This will enable you to write a custom message that users will see in the event 
 
 ### Display
 
-After submitting the form the user can be redirected to another page. That page will be a subpage of the form, so for example, if your form lives in `/form`, you can redirect users to `/form/thankyou` with the following code:
+After submitting the form, the presentation of the form will update to embed a subpage. So for example, if your form lives in `/form`, you can embed the subpage `/form/thankyou` with the following code:
 
 [prism classes="language-yaml line-numbers"]
 process:
     - display: thankyou
 [/prism]
 
-The Form plugin provides a `formdata` template that's suitable for the process destination page, as it outputs the result of the form submission. In the above example, you could create a `pages/form/thankyou/formdata.md` page.
+If you prefer to embed an absolute page path, like `site.com/thankyou`, prepend it with `/`, for example: `display: /thankyou`.
 
-If you're redirecting to a subpage, `display: thankyou` works perfectly. If you're redirecting to an absolute page path, like `site.com/thankyou`, prepend it with `/`, for example: `display: /thankyou`.
+The Form plugin provides a `formdata` template that's suitable for the process destination page, as it outputs the result of the form submission. In the above example, you could create a `pages/form/thankyou/formdata.md` page.
 
 Antimatter and compatible themes provide the `formdata.html.twig` Twig template, that looks like this:
 
@@ -208,11 +211,37 @@ process:
     - reset: true
 [/prism]
 
+### Remember field values
+
+Using the `remember` action, you can allow your users to have _some_ field values "recalled" from the last time a form was submitted. This is especially useful for forms which are submitted repeatedly, like an anonymous submission that requires information about the submitter.
+
+! [HTML5](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) and [Grav's Form plugin](../fields-available#common-field-attributes) already provide this in limited ways through the browser, so do make use of this. However, you may find that autocomplete doesn't work reliably for some users and fields.
+
+! The `remember` action **uses cookies** to store the last value, so it will only work on the same device and browser where the browser is configured to allow them from your site.
+
+To use this action, simply list the names of the fields you would like to be remembered.
+
+For example, an online medical referral form is a good use case. These are typically completed from the same computer with some field values that rarely change and are boring to complete repeatedly.
+
+[prism classes="language-yaml"]
+process:
+    - remember:
+        - referrer-name
+        - referrer-address
+        - referrer-specialty
+        - preferred-practitioner
+[/prism]
+
 ## Custom Actions
 
 You can "hook" into a form processing and perform any kind of operation. Perform custom processing, add data for an online web application, even save to a database.
 
 To do this, in the form process field add your own processing action name, for example 'yourAction'.
+
+[prism classes="language-yaml"]
+process:
+    yourAction: true
+[/prism]
 
 Then, create a simple plugin.
 

@@ -15,7 +15,7 @@ Twig filters are applied to Twig variables by using the `|` character followed b
 
 ### `absolute_url`
 
-Take a relative path and convert it to an absolute URL format including hostname
+Takes an HTML snippet containing a `src` or `href` attribute which uses a relative path. Converts the path string to an absolute URL format including hostname.
 
 `'<img src="/some/path/to/image.jpg" />'|absolute_url` <i class="fa fa-long-arrow-right"></i> `{{ '<img src="/some/path/to/image.jpg" />'|absolute_url|raw }}`
 
@@ -110,7 +110,7 @@ Return the dirname of a path.
 `'/etc/sudoers.d'|dirname` <i class="fa fa-long-arrow-right"></i> **{{ '/etc/sudoers.d'|dirname }}**
 
 
-### `ends_width`
+### `ends_with`
 
 Takes a needle and a haystack and determines if the haystack ends with the needle.  Also now works with an array of needles and will return `true` if **any** haystack ends with the needle.
 
@@ -258,6 +258,10 @@ Output a date in a human readable nice time format
 
 `page.date|nicetime(false)` <i class="fa fa-long-arrow-right"></i> **{{ page.date|nicetime(false) }}**
 
+The first argument specifies whether to use a full format date description. It's `true` by default.
+
+You can provide a second argument of `false` if you want to remove the time relative descriptor (like 'ago' or 'from now' in your language) from the result.
+
 [version=16,17]
 
 ### `of_type`
@@ -284,6 +288,14 @@ Pads a string to a certain length with another character. This is a wrapper for 
 Converts a string to the English plural version
 
 `'person'|pluralize` <i class="fa fa-long-arrow-right"></i> **{{ 'person'|pluralize }}**
+
+`pluralize` also takes an optional numeric parameter which you can pass in when you don't know in advance how many items the noun will refer to. It defaults to 2, so will provide the plural form if omitted. For example:
+
+{% verbatim %}
+[prism classes="language-twig "]
+<p>We have {{ num_vacancies }} {{ 'vacancy'|pluralize(num_vacancies) }} right now.</p>
+[/prism]
+{% endverbatim %}
 
 [version=16,17]
 
@@ -387,7 +399,8 @@ Translate a string into the current language
 
 `'MY_LANGUAGE_KEY_STRING'|t` <i class="fa fa-long-arrow-right"></i> **'Some Text in English'**
 
-This assumes you have these language strings translated in your site and have enabled multi-language support.  Please refer to the [multi-language documentation](../../content/multi-language) for more detailed information.
+This assumes you have these language strings translated in your site and have enabled 
+-language support.  Please refer to the [multi-language documentation](../../../content/multi-language) for more detailed information.
 
 ### `tu`
 
@@ -399,13 +412,13 @@ This uses the language field set in the user yaml.
 
 ### `ta`
 
-Translates an array with a language use the `|ta` filter. See the [multi-language documentation](../../content/multi-language) for a detailed example.
+Translates an array with a language use the `|ta` filter. See the [multi-language documentation](../../../content/multi-language) for a detailed example.
 
 `'MONTHS_OF_THE_YEAR'|ta(post.date|date('n') - 1)` <i class="fa fa-long-arrow-right"></i> **{{ now|date('F') }}**
 
 ### `tl`
 
-Translates a string in a specific language. For more details check out the [multi-language documentation](../../content/multi-language#complex-translations).
+Translates a string in a specific language. For more details check out the [multi-language documentation](../../../content/multi-language#complex-translations).
 
 `'SIMPLE_TEXT'|tl(['fr'])`
 
@@ -419,7 +432,7 @@ Simply truncates to 5 characters.
 
 `'one sentence. two sentences'|truncate(5, true)|raw` <i class="fa fa-long-arrow-right"></i> **{{ 'one sentence. two sentences'|truncate(5, true)|raw }}**
 
-!! The `|raw` Twig filiter should be used with the default `&helip;` (elipsis) padding element in order for it to render with Twig auto-escaping
+!! The `|raw` Twig filter should be used with the default `&hellip;` (elipsis) padding element in order for it to render with Twig auto-escaping
 
 Truncates to closest sentence-end after 5 characters.
 

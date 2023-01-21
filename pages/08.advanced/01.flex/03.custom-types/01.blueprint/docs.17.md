@@ -4,7 +4,7 @@ taxonomy:
     category: docs
 ---
 
-Basic structure of **Flex Blueprint** contains `title`, `description` and `type`, which describe the type and three sections: `config`, `blueprints` and `form`, which describe diferent aspects from the directory type.
+Basic structure of **Flex Blueprint** contains `title`, `description` and `type`, which describe the type and three sections: `config`, `blueprints` and `form`, which describe different aspects from the directory type.
 
 Main structure of `contacts.yaml`:
 ```yaml
@@ -22,9 +22,9 @@ blueprints: {}
 form: {}
 ```
 
-To create your own custom Directory, you need to start by naming your `type` (filename) and filling up the `title` and `description`.
+To create your own custom Directory, you need to start by naming your `type` (filename) and filling in the `title` and `description`.
 
-After creating the file and filling up the basic information, the next step is to either copy your existing form or to add some fields into the file.
+After creating the file and filling in the basic information, the next step is to either copy your existing form or to add some fields into the file.
 
 ! **TIP:** We assume that you already know how to create your own **[Forms and Blueprints](/forms)**.
 

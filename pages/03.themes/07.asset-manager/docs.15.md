@@ -62,12 +62,12 @@ An example of how you can add CSS files in your theme can be found in the defaul
         {% do assets.addJs('theme://js/html5shiv-printshiv.min.js') %}
     {% endif %}
 {% endblock %}
-{{ assets.css() }}
+{{ assets.css()|raw }}
 [/prism]
 
 The `block` twig tag just defines a region that can be replaced or appended to in templates that extend the one. Within the block, you will see a number of `do assets.addCss()` calls.
 
-The `{% do %}` tag is actually [one built in to Twig](http://twig.sensiolabs.org/doc/tags/do.html) itself, and it lets you manipulate variables without generating any output.
+The `{% do %}` tag is actually [one built in to Twig](https://twig.symfony.com/doc/1.x/tags/do.html) itself, and it lets you manipulate variables without generating any output.
 
 The `addCss()` method adds CSS assets to the Asset Manager. If you specify a second numeric parameter, that sets the priority of the stylesheet. In this case we want `grids-min.css` to be first as it has the highest priority value.  You will notice the use of a **PHP stream wrapper** `theme://` to provide an easy way for Grav to determine the current theme's relative path.
 
@@ -83,7 +83,7 @@ JavaScript assets are very similar:
     {% do assets.addJs('theme://js/slidebars.min.js') %}
     {% do assets.addInlineJs('alert(\'This is inline!\')') %}
 {% endblock %}
-{{ assets.js() }}
+{{ assets.js()|raw }}
 [/prism]
 
 ## Adding Assets
